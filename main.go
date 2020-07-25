@@ -31,6 +31,7 @@ func get(k string) ([]byte, error) {
 }
 
 func put(k string, b []byte) error {
+	c.Put(k, b)
 	return ioutil.WriteFile(k, b, 0644)
 }
 
