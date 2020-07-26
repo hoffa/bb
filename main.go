@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/hex"
 	"flag"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -30,7 +31,11 @@ func get(k string) ([]byte, error) {
 	return b, nil
 }
 
-func put(k string, b []byte) error {
+func put(k string, r io.Reader) error {
+	b, err := ioutil.ReadAll(r)
+	if err != nil {
+		return err
+	}
 	c.Put(k, b)
 	return ioutil.WriteFile(k, b, 0644)
 }
@@ -50,12 +55,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		fallthrough
 	case http.MethodPut:
-		b, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		if err := put(k, b); err != nil {
+		if err := put(k, r.Body); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
