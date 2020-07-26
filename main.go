@@ -4,7 +4,6 @@ import (
 	"encoding/hex"
 	"flag"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 
@@ -42,7 +41,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		b, err := get(k)
 		if err != nil {
-			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -50,12 +48,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPut:
 		b, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 		if err := put(k, b); err != nil {
-			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -67,9 +63,9 @@ func main() {
 	flag.Parse()
 
 	if err := os.MkdirAll(dataDir, 0755); err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(*addr, nil))
+	panic(http.ListenAndServe(*addr, nil))
 }
