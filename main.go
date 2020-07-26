@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/hex"
+	"flag"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -62,9 +63,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	addr := flag.String("addr", ":8080", "address to listen to")
+	flag.Parse()
+
 	if err := os.MkdirAll(dataDir, 0755); err != nil {
 		log.Fatal(err)
 	}
+
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(*addr, nil))
 }
