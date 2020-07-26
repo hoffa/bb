@@ -44,20 +44,18 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	k := dataDir + "/" + safeFilename(r.URL.Path)
 	switch r.Method {
 	case http.MethodGet:
-		b, err := get(k)
-		if err != nil {
+		if b, err := get(k); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			return
+		} else {
+			w.Header().Set("Content-Type", "application/octet-stream")
+			w.Write(b)
 		}
-		w.Header().Set("Content-Type", "application/octet-stream")
-		w.Write(b)
 	// Makes using curl simpler (no need to specify -X)
 	case http.MethodPost:
 		fallthrough
 	case http.MethodPut:
 		if err := put(k, r.Body); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			return
 		}
 	}
 }
