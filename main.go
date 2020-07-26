@@ -44,6 +44,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+		w.Header().Set("Content-Type", "application/octet-stream")
 		w.Write(b)
 	case http.MethodPut:
 		b, err := ioutil.ReadAll(r.Body)
