@@ -1,5 +1,7 @@
 # bb
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/hoffa/bb)](https://goreportcard.com/report/github.com/hoffa/bb)
+
 Easily store small amounts of data behind an HTTP server.
 
 Built so I can have something remotely useful to play with on my Raspberry Pi Zero W.
