@@ -47,7 +47,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if b, err := get(k); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		} else {
-			w.Header().Set("Content-Type", "application/octet-stream")
 			w.Write(b)
 		}
 	// Makes using curl simpler (no need to specify -X)
