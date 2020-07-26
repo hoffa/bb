@@ -19,6 +19,8 @@ bb
 ## Example
 
 ```shell
-curl -X PUT --data-binary @myfile.jpg localhost:8080/myfile
-curl localhost:8080/myfile > myfile.jpg
+curl --data-binary @file.txt localhost:8080/file
+curl localhost:8080/file
 ```
+
+Response `Content-Type` is always `application/octet-stream`.
