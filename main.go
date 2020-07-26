@@ -46,6 +46,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Header().Set("Content-Type", "application/octet-stream")
 		w.Write(b)
+	// Makes using curl simpler (no need to specify -X)
+	case http.MethodPost:
+		fallthrough
 	case http.MethodPut:
 		b, err := ioutil.ReadAll(r.Body)
 		if err != nil {
