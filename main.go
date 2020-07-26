@@ -39,7 +39,7 @@ func put(k string, b []byte) error {
 func handler(w http.ResponseWriter, r *http.Request) {
 	k := dataDir + "/" + safeFilename(r.URL.Path)
 	switch r.Method {
-	case "GET":
+	case http.MethodGet:
 		b, err := get(k)
 		if err != nil {
 			log.Println(err)
@@ -47,7 +47,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		w.Write(b)
-	case "PUT":
+	case http.MethodPut:
 		b, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			log.Println(err)
