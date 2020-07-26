@@ -24,5 +24,3 @@ bb
 curl --data-binary @file.txt localhost:8080/file
 curl localhost:8080/file
 ```
-
-Response `Content-Type` is always `application/octet-stream`.
