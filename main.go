@@ -11,7 +11,7 @@ import (
 	"github.com/hoffa/bb/cache"
 )
 
-const dataDir = "data"
+var dataDir string
 
 var c = cache.New(128)
 
@@ -60,6 +60,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	flag.StringVar(&dataDir, "data", "data", "data directory")
 	addr := flag.String("addr", ":8080", "address to listen to")
 	flag.Parse()
 
